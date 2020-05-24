@@ -5,10 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,6 +77,8 @@ public class CurrentInventory implements Initializable {
     @FXML
     private Button ExitButton;
 
+    static Log log;
+
     Statement statement;
    // private static final String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private static final String regex = "^[A-Za-z+_.-]+-[A-Za-z0-9.-]+$";
@@ -127,12 +131,20 @@ public class CurrentInventory implements Initializable {
                 + received + "," + shipped + "," + hand + ")";
             this.statement.executeUpdate(sql);
             show();
+            /////
+                log.logger.setLevel(Level.INFO);
+                log.logger.info("Add Record to Products Table");
+            /////
         }else{
             Alert a = new Alert(Alert.AlertType.NONE);
             a.setContentText("Product must meet the following pattern: Dell Server- XP 2000");
             a.setAlertType(Alert.AlertType.INFORMATION);
-            a.show();
+            a.showAndWait();
         }
+        /////
+        log.logger.setLevel(Level.INFO);
+        log.logger.info("Add Record to Products Table");
+        /////
 
 
 
@@ -155,10 +167,14 @@ public class CurrentInventory implements Initializable {
                 starting + ", InventoryReceived=" + received + ", " +
                 "InventoryShipped=" + shipped + ", " +
                 "InventoryOnHand=" + hand +
-                " Where product=" + nameToChange;
+                " Where product='" + nameToChange + "'";
         this.statement.executeUpdate(sql);
         resetText();
         show();
+        /////
+        log.logger.setLevel(Level.INFO);
+        log.logger.info("Edit Record in Products Table");
+        /////
     }
     private void resetText(){
         txFiName.setText("");
@@ -175,12 +191,19 @@ public class CurrentInventory implements Initializable {
         this.statement.executeUpdate(sql);
         resetText();
         show();
-
+        /////
+        log.logger.setLevel(Level.INFO);
+        log.logger.info("Delete Record From Products Table");
+        /////
     }
 
     @FXML
     void buttonHandleView() throws Exception {
         show();
+        /////
+        log.logger.setLevel(Level.INFO);
+        log.logger.info("View Products Table Records");
+        /////
     }
     public void show() throws Exception{
         ResultSet rs = this.statement.executeQuery("Select * From Products");
@@ -211,6 +234,10 @@ public class CurrentInventory implements Initializable {
 
     @FXML
     void ButtonExit() {
+        /////
+        log.logger.setLevel(Level.SEVERE);
+        log.logger.severe("**** Disconnect From Database Successfully ****");
+        /////
     System.exit(1);
     }
 

@@ -126,12 +126,7 @@
          <children>
             <Button fx:id="buttonAdd" mnemonicParsing="false" onAction="#buttonHandleAdd" text="Add">
                <HBox.margin>
-                  <Insets left="80.0" right="20.0" top="50.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="buttonEdit" layoutX="270.0" layoutY="60.0" mnemonicParsing="false" onAction="#buttonHandleEdit" styleClass="buttonView" text="Edit">
-               <HBox.margin>
-                  <Insets right="20.0" top="50.0" />
+                  <Insets left="120.0" right="20.0" top="50.0" />
                </HBox.margin>
             </Button>
             <Button fx:id="buttonView" mnemonicParsing="false" onAction="#buttonHandleView" styleClass="buttonView" text="View">

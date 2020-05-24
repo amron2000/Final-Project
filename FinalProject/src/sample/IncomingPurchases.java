@@ -21,6 +21,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.Date;
+import java.util.logging.Level;
+
 
 
 public class IncomingPurchases implements Initializable {
@@ -67,8 +69,8 @@ public class IncomingPurchases implements Initializable {
     @FXML
     private Button buttonAdd;
 
-    @FXML
-    private Button buttonEdit;
+//    @FXML
+//    private Button buttonEdit;
 
     @FXML
     private Button buttonView;
@@ -79,9 +81,9 @@ public class IncomingPurchases implements Initializable {
     @FXML
     private Button ExitButton;
 
+    Log log = CurrentInventory.log;
     Statement statement;
     Integer idUpdate;
-
 
     public void initialize(URL url, ResourceBundle rb){
         try {
@@ -107,7 +109,6 @@ public class IncomingPurchases implements Initializable {
         }
         tableView.getSelectionModel().selectedItemProperty().addListener(
                 event-> showSelectedproducts());
-
     }
 
     private void productgetName() throws SQLException {
@@ -165,32 +166,74 @@ public class IncomingPurchases implements Initializable {
                 " values(" + "'" + product + "'," + "'" + supplier + "',"
                 + received + ",'" + date +  "')";
         this.statement.executeUpdate(sql);
+        /////////////////////////////////
+        ResultSet rs = this.statement.executeQuery("Select InventoryReceived From products Where Product ='" +product + "'");
+        rs.next();
+        int allReceived = rs.getInt("InventoryReceived");
+        int newReceived = allReceived + received;
+        String sql1 = "Update products Set InventoryReceived=" + newReceived +
+                " Where product='" + product + "'";
+        this.statement.executeUpdate(sql1);
+        ///////////////////
+        ResultSet rs2 = this.statement.executeQuery("Select InventoryOnHand From products Where Product ='" +product + "'");
+        rs2.next();
+        int allHand = rs2.getInt("InventoryOnHand");
+        int newHand = allHand + received;
+        String sql2 = "Update products Set InventoryOnHand=" + newHand +
+                " Where product='" + product + "'";
+        this.statement.executeUpdate(sql2);
         show();
+        /////
+        log.logger.setLevel(Level.INFO);
+        log.logger.info("Add Record to Purchases Table");
+        /////
     }
 
     @FXML
     void buttonHandleDelete() throws Exception {
         int id = tableView.getSelectionModel().getSelectedItem().getId();
-        String sql = ("DELETE FROM purchases WHERE id =" + id );
-        this.statement.executeUpdate(sql);
-        resetText();
-        show();
-    }
-
-    @FXML
-    void buttonHandleEdit() throws Exception {
-        String date = String.valueOf(txFiDate.getValue());
         String product = String.valueOf(txFiProduct.getValue());
         Integer received = Integer.parseInt(txFiReceived.getText());
-        String supplier = String.valueOf(txFiSupplier.getValue());
-        String sql = "Update purchases Set ProductName='" + product + "', SupplierName=" + "'" +
-                supplier + "', NumberReceived=" + received + ", " +
-                "PurchaseDate=" + "'" + date +
-                "' Where id=" + idUpdate;
+        String sql = ("DELETE FROM purchases WHERE id =" + id );
         this.statement.executeUpdate(sql);
+        /////////////////////////////////
+        ResultSet rs = this.statement.executeQuery("Select InventoryReceived From products Where Product ='" +product + "'");
+        rs.next();
+        int allReceived = rs.getInt("InventoryReceived");
+        int newReceived = allReceived - received;
+        String sql1 = "Update products Set InventoryReceived=" + newReceived +
+                " Where product='" + product + "'";
+        this.statement.executeUpdate(sql1);
+        //////////////////////////////////
+        ResultSet rs2 = this.statement.executeQuery("Select InventoryOnHand From products Where Product ='" +product + "'");
+        rs2.next();
+        int allHand = rs2.getInt("InventoryOnHand");
+        int newHand = allHand - received;
+        String sql2 = "Update products Set InventoryOnHand=" + newHand +
+                " Where product='" + product + "'";
+        this.statement.executeUpdate(sql2);
         resetText();
         show();
+        /////
+        log.logger.setLevel(Level.INFO);
+        log.logger.info("Delete Record From Purchases Table");
+        /////
     }
+
+//    @FXML
+//    void buttonHandleEdit() throws Exception {
+//        String date = String.valueOf(txFiDate.getValue());
+//        String product = String.valueOf(txFiProduct.getValue());
+//        Integer received = Integer.parseInt(txFiReceived.getText());
+//        String supplier = String.valueOf(txFiSupplier.getValue());
+//        String sql = "Update purchases Set ProductName='" + product + "', SupplierName=" + "'" +
+//                supplier + "', NumberReceived=" + received + ", " +
+//                "PurchaseDate=" + "'" + date +
+//                "' Where id=" + idUpdate;
+//        this.statement.executeUpdate(sql);
+//        resetText();
+//        show();
+//    }
     private void resetText(){
       //  txFiDate.;
         txFiProduct.setValue("");
@@ -201,6 +244,10 @@ public class IncomingPurchases implements Initializable {
     @FXML
     void buttonHandleView() throws Exception {
         show();
+        /////
+        log.logger.setLevel(Level.INFO);
+        log.logger.info("View Purchases Table Records");
+        /////
 //        show2();
     }
     public void show() throws Exception{
@@ -241,10 +288,13 @@ public class IncomingPurchases implements Initializable {
 
     @FXML
     void ButtonExit() {
+        /////
+        log.logger.setLevel(Level.SEVERE);
+        log.logger.severe("**** Disconnect From Database Successfully ****");
+        /////
         System.exit(1);
     }
 
-
-    }
+}
 
 

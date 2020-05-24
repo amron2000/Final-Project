@@ -1,0 +1,14 @@
+May 24, 2020 10:12:28 PM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 24, 2020 10:12:41 PM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 24, 2020 10:12:47 PM sample.IncomingPurchases buttonHandleView
+INFO: View Purchases Table Records
+May 24, 2020 10:12:53 PM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 24, 2020 10:12:56 PM sample.IncomingPurchases buttonHandleView
+INFO: View Purchases Table Records
+May 24, 2020 10:12:58 PM sample.IncomingPurchases buttonHandleDelete
+INFO: Delete Record From Purchases Table
+May 24, 2020 10:14:58 PM sample.Main start
+SEVERE: **** Connect To Database Successfully ****

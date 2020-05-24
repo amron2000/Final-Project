@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 public class OutgoingOrders implements Initializable {
 
@@ -68,8 +69,8 @@ public class OutgoingOrders implements Initializable {
     @FXML
     private Button buttonAdd;
 
-    @FXML
-    private Button buttonEdit;
+//    @FXML
+//    private Button buttonEdit;
 
     @FXML
     private Button buttonView;
@@ -80,6 +81,7 @@ public class OutgoingOrders implements Initializable {
     @FXML
     private Button ExitButton;
 
+    Log log = CurrentInventory.log;
     Statement statement;
     Integer idUpdate;
 
@@ -115,7 +117,7 @@ public class OutgoingOrders implements Initializable {
         List<String> list = new ArrayList<>();
         while(rs2.next()){
             Product product = new Product();
-            product.setProductName(rs2.getString("ProductName"));
+            product.setProductName(rs2.getString("Product"));
             String save = product.getProductName();
             list.add(save);
         }
@@ -156,7 +158,7 @@ public class OutgoingOrders implements Initializable {
 
 
     @FXML
-    void buttonHandleAdd() throws Exception {
+    void buttonHandleAdd() throws Exception { ////// run and try ////// also Delete
         String customer = String.valueOf(txFiCustomer.getValue());
         String product = String.valueOf(txFiProduct.getValue());
         Integer shipped = Integer.parseInt(txFiShipped.getText());
@@ -165,16 +167,59 @@ public class OutgoingOrders implements Initializable {
                 " values(" + "'" + product + "','" +  customer + "',"
                  + shipped + ",'" + date +  "')";
         this.statement.executeUpdate(sql);
+        /////////////////////////////////
+        ResultSet rs = this.statement.executeQuery("Select InventoryShipped From products Where Product ='" +product + "'");
+        rs.next();
+        int allShipped = rs.getInt("InventoryShipped");
+        int newShipped = allShipped + shipped;
+        String sql1 = "Update products Set InventoryShipped=" + newShipped +
+                " Where product='" + product + "'";
+        this.statement.executeUpdate(sql1);
+        /////////////////////////////////
+        ResultSet rs2 = this.statement.executeQuery("Select InventoryOnHand From products Where Product ='" +product + "'");
+        rs2.next();
+        int allHand = rs2.getInt("InventoryOnHand");
+        int newHand = allHand - shipped;
+        String sql2 = "Update products Set InventoryOnHand=" + newHand +
+                " Where product='" + product + "'";
+        this.statement.executeUpdate(sql2);
+        resetText();
         show();
+        /////
+        log.logger.setLevel(Level.INFO);
+        log.logger.info("Add Record to Orders Table");
+        /////
     }
 
     @FXML
     void buttonHandleDelete() throws Exception {
         int id = tableView.getSelectionModel().getSelectedItem().getId();
+        String product = String.valueOf(txFiProduct.getValue());
+        Integer shipped = Integer.parseInt(txFiShipped.getText());
         String sql = ("DELETE FROM orders WHERE id =" + id );
         this.statement.executeUpdate(sql);
+        /////////////////////////////////
+        ResultSet rs = this.statement.executeQuery("Select InventoryShipped From products Where Product ='" +product + "'");
+        rs.next();
+        int allShipped = rs.getInt("InventoryShipped");
+        int newShipped = allShipped - shipped;
+        String sql1 = "Update products Set InventoryShipped=" + newShipped +
+                " Where product='" + product + "'";
+        this.statement.executeUpdate(sql1);
+        ///
+        ResultSet rs2 = this.statement.executeQuery("Select InventoryOnHand From products Where Product ='" +product + "'");
+        rs2.next();
+        int allHand = rs2.getInt("InventoryOnHand");
+        int newHand = allHand + shipped;
+        String sql2 = "Update products Set InventoryOnHand=" + newHand +
+                " Where product='" + product + "'";
+        this.statement.executeUpdate(sql2);
         resetText();
         show();
+        /////
+        log.logger.setLevel(Level.INFO);
+        log.logger.info("Delete Record From Orders Table");
+        /////
     }
     private void resetText(){
         //  txFiDate.;
@@ -183,24 +228,35 @@ public class OutgoingOrders implements Initializable {
         txFiCustomer.setValue("");
     }
 
-    @FXML
-    void buttonHandleEdit() throws Exception {
-        String date = String.valueOf(txFiDate.getValue());
-        String product = String.valueOf(txFiProduct.getValue());
-        Integer shipped = Integer.parseInt(txFiShipped.getText());
-        String customer = String.valueOf(txFiCustomer.getValue());
-        String sql = "Update orders Set ProductName='" + product +
-                "' customer=" + "'" +  customer + "', NumberShipped=" +
-                shipped + ", OrderDate= '" + date +
-                "' Where id=" + idUpdate;
-        this.statement.executeUpdate(sql);
-        resetText();
-        show();
-    }
+//    @FXML
+//    void buttonHandleEdit() throws Exception {
+//        String date = String.valueOf(txFiDate.getValue());
+//        String product = String.valueOf(txFiProduct.getValue());
+//        Integer shipped = Integer.parseInt(txFiShipped.getText());
+//        String customer = String.valueOf(txFiCustomer.getValue());
+//        String sql = "Update orders Set ProductName='" + product +
+//                "' customer=" + "'" +  customer + "', NumberShipped=" +
+//                shipped + ", OrderDate= '" + date +
+//                "' Where id=" + idUpdate;
+//        this.statement.executeUpdate(sql);
+//        ResultSet rs = this.statement.executeQuery("Select InventoryShipped From products Where Product ='" +product + "'");
+//        rs.next();
+//        int allShipped = rs.getInt("InventoryShipped");
+//        int newShipped = allShipped + shipped;
+//        String sql1 = "Update products Set InventoryShipped=" + newShipped +
+//                " Where product='" + product + "'";
+//        this.statement.executeUpdate(sql1);
+//        resetText();
+//        show();
+//    }
 
     @FXML
     void buttonHandleView() throws Exception {
         show();
+        /////
+        log.logger.setLevel(Level.INFO);
+        log.logger.info("View Products Table Records");
+        /////
     }
     public void show() throws Exception{
         ResultSet rs = this.statement.executeQuery("Select * From orders");
@@ -230,6 +286,10 @@ public class OutgoingOrders implements Initializable {
 
     @FXML
     void ButtonExit() {
+        /////
+        log.logger.setLevel(Level.SEVERE);
+        log.logger.severe("**** Disconnect From Database Successfully ****");
+        /////
         System.exit(1);
     }
 
