@@ -1,0 +1,22 @@
+
+.button{
+   -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-weight:bold;
+    -fx-background-color: linear-gradient(#3366ff,#000099);
+}
+.buttonView{
+   -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-weight:bold;
+    -fx-background-color: linear-gradient(#00ff00,#000099);
+}
+.buttonDelete{
+   -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-weight:bold;
+    -fx-background-color: linear-gradient(#ff0000,#000099);
+}
+.button:hover{
+    -fx-background-color: linear-gradient(ff0000,#cc0000);
+}

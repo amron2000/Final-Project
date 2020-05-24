@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="rootpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="714.0" stylesheets="@../../newcss.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <HBox layoutX="-1.0" layoutY="65.0" prefHeight="356.0" prefWidth="714.0">
+         <children>
+            <TableView fx:id="tableView" prefHeight="312.0" prefWidth="714.0">
+              <columns>
+                <TableColumn fx:id="tbColID" prefWidth="82.0" text="ID" />
+                <TableColumn fx:id="tbColName" prefWidth="83.0" text="Name" />
+                  <TableColumn fx:id="tbColStarting" prefWidth="124.0" text="Starting Inventory" />
+                  <TableColumn fx:id="tbColReceived" minWidth="0.0" prefWidth="140.0" text="Inventory Received" />
+                  <TableColumn fx:id="tbColShipped" minWidth="4.0" prefWidth="142.0" text="Inventory Shipped" />
+                  <TableColumn fx:id="tbColOnHand" minWidth="4.0" prefWidth="142.0" text="Inventory On Hand" />
+              </columns>
+            </TableView>
+         </children>
+      </HBox>
+      <TabPane prefHeight="60.0" prefWidth="714.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="TabCurrent" onSelectionChanged="#OnTabCurrent" text="Current Inventory">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="23.0" prefWidth="714.0" />
+            </content>
+          </Tab>
+            <Tab fx:id="TabPurchases" onSelectionChanged="#OnTabPurchases" text="Incoming Purchases">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="11.0" prefWidth="714.0" />
+               </content>
+            </Tab>
+            <Tab fx:id="TabOrders" onSelectionChanged="#OnTabOrders" text="Outgoing Orders">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <HBox layoutY="421.0" prefHeight="130.0" prefWidth="714.0">
+         <children>
+            <Button fx:id="buttonAdd" mnemonicParsing="false" onAction="#buttonHandleAdd" text="Add">
+               <HBox.margin>
+                  <Insets left="230.0" right="20.0" top="50.0" />
+               </HBox.margin></Button>
+            <Button fx:id="buttonEdit" layoutX="270.0" layoutY="60.0" mnemonicParsing="false" onAction="#buttonHandleEdit" styleClass="buttonView" text="Edit">
+               <HBox.margin>
+                  <Insets right="20.0" top="50.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="buttonView" mnemonicParsing="false" onAction="#buttonHandleView" styleClass="buttonView" text="View">
+               <HBox.margin>
+                  <Insets right="20.0" top="50.0" />
+               </HBox.margin></Button>
+            <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#buttonHandleDelete" styleClass="buttonDelete" text="Delete">
+               <HBox.margin>
+                  <Insets top="50.0" />
+               </HBox.margin></Button>
+         </children>
+      </HBox>
+   </children>
+</Pane>
