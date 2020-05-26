@@ -1,5 +1,7 @@
 package sample;
 
+import com.mysql.jdbc.MySQLConnection;
+import com.mysql.jdbc.exceptions.MySQLDataException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,14 +21,10 @@ public class Main extends Application {
                 e.printStackTrace();
             }
         }
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/current.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-        //////
-        CurrentInventory.log.logger.setLevel(Level.SEVERE);
-        CurrentInventory.log.logger.severe("**** Connect To Database Successfully ****");
-        //////
+            Parent root = FXMLLoader.load(getClass().getResource("fxml/Login.fxml"));
+            primaryStage.setTitle("Hello World");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
     }
 
 

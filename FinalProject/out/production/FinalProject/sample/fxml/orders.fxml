@@ -2,11 +2,29 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <Pane fx:id="rootpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="1324.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.OutgoingOrders">
    <children>
+      <ImageView fitHeight="551.0" fitWidth="1330.0" opacity="0.65" pickOnBounds="true">
+         <image>
+            <Image url="@../images/OutgoingOrders.jpg" />
+         </image>
+      </ImageView>
+      <TilePane layoutX="208.0" layoutY="-1.0" prefHeight="88.0" prefWidth="1116.0" style="-fx-background-color: lightgreen;">
+         <children>
+            <Label prefHeight="88.0" prefWidth="670.0" text="Outgoing Orders">
+               <padding>
+                  <Insets left="80.0" />
+               </padding>
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </TilePane>
       <HBox layoutX="610.0" layoutY="86.0" prefHeight="442.0" prefWidth="704.0">
          <children>
             <TableView fx:id="tableView" prefHeight="484.0" prefWidth="704.0">
@@ -20,7 +38,7 @@
             </TableView>
          </children>
       </HBox>
-      <VBox layoutX="-3.0" prefHeight="542.0" prefWidth="210.0" style="-fx-background-color: gray;">
+      <VBox layoutX="-3.0" prefHeight="542.0" prefWidth="215.0" style="-fx-background-color: gray;">
          <children>
             <Button fx:id="buttonCurrent" mnemonicParsing="false" onAction="#buttonHandleCurrent" prefHeight="50.0" prefWidth="262.0" style="-fx-background-color: darkgray;" text="Current Inventory">
                <VBox.margin>
@@ -38,7 +56,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="262.0" style="-fx-background-color: darkgray;" text="Chart of Info">
+            <Button mnemonicParsing="false" onAction="#buttonLog" prefHeight="50.0" prefWidth="262.0" style="-fx-background-color: darkgray;" text="Log File">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
@@ -46,7 +64,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="370.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="262.0" style="-fx-background-color: darkgray;" text="Sign Out">
+            <Button layoutX="10.0" layoutY="370.0" mnemonicParsing="false" onAction="#buttonSignOut" prefHeight="50.0" prefWidth="262.0" style="-fx-background-color: darkgray;" text="Sign Out">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
@@ -64,11 +82,11 @@
             </Button>
          </children>
       </VBox>
-      <VBox layoutX="207.0" layoutY="87.0" prefHeight="354.0" prefWidth="405.0">
+      <VBox layoutX="212.0" layoutY="87.0" prefHeight="354.0" prefWidth="400.0">
          <children>
             <TilePane prefHeight="39.0" prefWidth="361.0" style="-fx-background-color: lightgray;">
                <children>
-                  <Label prefHeight="40.0" prefWidth="405.0" text="Add/Edit Record">
+                  <Label prefHeight="40.0" prefWidth="396.0" text="Add/Edit Record">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -91,22 +109,22 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Order Date" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <Label style="-fx-font-weight: bolder;" text="Order Date" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Number Shipped" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                  <Label style="-fx-font-weight: bolder;" text="Number Shipped" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Product" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <Label style="-fx-font-weight: bolder;" text="Product" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Customer" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                  <Label style="-fx-font-weight: bolder;" text="Customer" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -114,7 +132,7 @@
                   <TextField fx:id="txFiShipped" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <DatePicker fx:id="txFiDate" prefHeight="25.0" prefWidth="201.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <ChoiceBox fx:id="txFiProduct" prefHeight="25.0" prefWidth="205.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <ChoiceBox fx:id="txFiCustomer" prefWidth="205.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="txFiCustomer" prefWidth="205.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
                <VBox.margin>
                   <Insets right="10.0" />
@@ -124,34 +142,22 @@
       </VBox>
       <HBox layoutX="206.0" layoutY="317.0" prefHeight="121.0" prefWidth="406.0">
          <children>
-            <Button fx:id="buttonAdd" mnemonicParsing="false" onAction="#buttonHandleAdd" text="Add">
+            <Button fx:id="buttonAdd" mnemonicParsing="false" onAction="#buttonHandleAdd" style="-fx-background-color: #A9E4F2;" text="Add">
                <HBox.margin>
                   <Insets left="120.0" right="20.0" top="50.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="buttonView" mnemonicParsing="false" onAction="#buttonHandleView" styleClass="buttonView" text="View">
+            <Button fx:id="buttonView" mnemonicParsing="false" onAction="#buttonHandleView" style="-fx-background-color: #A9E4F2;" styleClass="buttonView" text="View">
                <HBox.margin>
                   <Insets right="20.0" top="50.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#buttonHandleDelete" styleClass="buttonDelete" text="Delete">
+            <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#buttonHandleDelete" style="-fx-background-color: #A9E4F2;" styleClass="buttonDelete" text="Delete">
                <HBox.margin>
                   <Insets top="50.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-      <TilePane layoutX="208.0" layoutY="-1.0" prefHeight="88.0" prefWidth="1116.0" style="-fx-background-color: lightgreen;">
-         <children>
-            <Label prefHeight="88.0" prefWidth="662.0" text="Outgoing Orders">
-               <padding>
-                  <Insets left="80.0" />
-               </padding>
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-         </children>
-      </TilePane>
    </children>
 </Pane>

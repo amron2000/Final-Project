@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
@@ -16,6 +17,7 @@ import java.util.regex.Pattern;
 
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 
 
 public class CurrentInventory implements Initializable {
@@ -80,19 +82,23 @@ public class CurrentInventory implements Initializable {
     static Log log;
 
     Statement statement;
-   // private static final String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    // private static final String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private static final String regex = "^[A-Za-z+_.-]+-[A-Za-z0-9.-]+$";
 
-    public void initialize(URL url, ResourceBundle rb){
+    public void initialize(URL url, ResourceBundle rb) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection =
                     DriverManager.
                             getConnection("jdbc:mysql://127.0.0.1:3306/inventory?serverTimezone=UTC",
-                                    "root","");
+                                    "root", "");
             this.statement = connection.createStatement();
+            //////
+            CurrentInventory.log.logger.setLevel(Level.SEVERE);
+            CurrentInventory.log.logger.severe("**** Connect To Database Successfully ****");
+            //////
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Cannot connect to Database");
         }
         tbColName.setCellValueFactory(new PropertyValueFactory("ProductName"));
         tbColStarting.setCellValueFactory(new PropertyValueFactory("starting"));
@@ -100,12 +106,12 @@ public class CurrentInventory implements Initializable {
         tbColShipped.setCellValueFactory(new PropertyValueFactory("shipped"));
         tbColOnHand.setCellValueFactory(new PropertyValueFactory("onHand"));
         tableView.getSelectionModel().selectedItemProperty().addListener(
-                event-> showSelectedproducts());
+                event -> showSelectedproducts());
     }
 
-    private void showSelectedproducts(){
+    private void showSelectedproducts() {
         Product product = tableView.getSelectionModel().getSelectedItem();
-        if(product != null){
+        if (product != null) {
             txFiName.setText(product.getProductName());
             txFiStarting.setText(String.valueOf(product.getStarting()));
             txFiReceived.setText(String.valueOf(product.getReceived()));
@@ -125,28 +131,22 @@ public class CurrentInventory implements Initializable {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(name);
         matcher.matches();
-        if(matcher.matches()){
-                String sql = "INSERT INTO products (Product, StartingInventory, InventoryReceived, InventoryShipped, InventoryOnHand)" +
-                " values(" + "'" + name + "'," +start + ","
-                + received + "," + shipped + "," + hand + ")";
+        if (matcher.matches()) {
+            String sql = "INSERT INTO products (Product, StartingInventory, InventoryReceived, InventoryShipped, InventoryOnHand)" +
+                    " values(" + "'" + name + "'," + start + ","
+                    + received + "," + shipped + "," + hand + ")";
             this.statement.executeUpdate(sql);
             show();
             /////
-                log.logger.setLevel(Level.INFO);
-                log.logger.info("Add Record to Products Table");
+            log.logger.setLevel(Level.INFO);
+            log.logger.info("Add Record to Products Table");
             /////
-        }else{
+        } else {
             Alert a = new Alert(Alert.AlertType.NONE);
-            a.setContentText("Product must meet the following pattern: Dell Server- XP 2000");
+            a.setContentText("Product must meet the following pattern: DellServer-XP2000");
             a.setAlertType(Alert.AlertType.INFORMATION);
             a.showAndWait();
         }
-        /////
-        log.logger.setLevel(Level.INFO);
-        log.logger.info("Add Record to Products Table");
-        /////
-
-
 
 //        Parent root = FXMLLoader.load(getClass().getResource("fxml/AddProduct.fxml"));
 //        Scene scene = new Scene(root);
@@ -176,7 +176,8 @@ public class CurrentInventory implements Initializable {
         log.logger.info("Edit Record in Products Table");
         /////
     }
-    private void resetText(){
+
+    private void resetText() {
         txFiName.setText("");
         txFiStarting.setText("");
         txFiReceived.setText("");
@@ -186,15 +187,29 @@ public class CurrentInventory implements Initializable {
 
     @FXML
     void buttonHandleDelete() throws Exception {
-        String name = tableView.getSelectionModel().getSelectedItem().getProductName();
-        String sql = ("DELETE FROM products WHERE Product ='" + name +"'" );
-        this.statement.executeUpdate(sql);
-        resetText();
-        show();
-        /////
-        log.logger.setLevel(Level.INFO);
-        log.logger.info("Delete Record From Products Table");
-        /////
+        Alert c = new Alert(Alert.AlertType.CONFIRMATION);
+        c.setContentText(" Are you sure you want to delete this Record ?");
+        Optional<ButtonType> result =  c.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                String name = tableView.getSelectionModel().getSelectedItem().getProductName();
+                String sql = ("DELETE FROM products WHERE Product ='" + name + "'");
+                this.statement.executeUpdate(sql);
+            } catch (Exception e) {
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setContentText(" Cannot Delete This Product, you must delete the contracts first ");
+                a.setAlertType(Alert.AlertType.WARNING);
+                a.showAndWait();
+            }
+            resetText();
+            show();
+            /////
+            log.logger.setLevel(Level.INFO);
+            log.logger.info("Delete Record From Products Table");
+            /////
+        }else{
+            System.out.println("will not delete");
+        }
     }
 
     @FXML
@@ -205,10 +220,11 @@ public class CurrentInventory implements Initializable {
         log.logger.info("View Products Table Records");
         /////
     }
-    public void show() throws Exception{
+
+    public void show() throws Exception {
         ResultSet rs = this.statement.executeQuery("Select * From Products");
         tableView.getItems().clear();
-        while(rs.next()){
+        while (rs.next()) {
             Product product = new Product();
             product.setProductName(rs.getString("Product"));
             product.setStarting(rs.getInt("startingInventory"));
@@ -231,6 +247,28 @@ public class CurrentInventory implements Initializable {
         rootpane.getChildren().setAll(pane);
 
     }
+    @FXML
+    void buttonLog() {
+        String path = "D:\\amro\\JetBrains\\JavaFx\\FinalProject\\log.txt";
+        File f = new File(path);
+        if(f.exists()) {
+            try {
+                Runtime rt = Runtime.getRuntime();
+                Process pro = rt.exec("Notepad "+path);
+                pro.waitFor();
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }else{
+            System.out.println("file not found ");
+        }
+    }
+
+    @FXML
+    void buttonSignOut() throws Exception {
+        Pane pane = FXMLLoader.load(getClass().getResource("fxml/Login.fxml"));
+        rootpane.getChildren().setAll(pane);
+    }
 
     @FXML
     void ButtonExit() {
@@ -238,8 +276,11 @@ public class CurrentInventory implements Initializable {
         log.logger.setLevel(Level.SEVERE);
         log.logger.severe("**** Disconnect From Database Successfully ****");
         /////
-    System.exit(1);
+        System.exit(1);
     }
 
+
 }
+
+
 

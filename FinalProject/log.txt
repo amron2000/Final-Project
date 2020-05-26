@@ -1,14 +1,160 @@
-May 24, 2020 10:12:28 PM sample.CurrentInventory initialize
+May 26, 2020 11:22:39 AM sample.CurrentInventory initialize
 SEVERE: **** Connect To Database Successfully ****
-May 24, 2020 10:12:41 PM sample.CurrentInventory buttonHandleView
+May 26, 2020 11:23:58 AM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 11:24:04 AM sample.CurrentInventory buttonHandleView
 INFO: View Products Table Records
-May 24, 2020 10:12:47 PM sample.IncomingPurchases buttonHandleView
-INFO: View Purchases Table Records
-May 24, 2020 10:12:53 PM sample.CurrentInventory initialize
+May 26, 2020 11:24:28 AM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 11:24:53 AM sample.CurrentInventory buttonHandleAdd
+INFO: Add Record to Products Table
+May 26, 2020 11:25:07 AM sample.CurrentInventory buttonHandleAdd
+INFO: Add Record to Products Table
+May 26, 2020 11:25:07 AM sample.CurrentInventory buttonHandleAdd
+INFO: Add Record to Products Table
+May 26, 2020 11:30:30 AM sample.CurrentInventory initialize
 SEVERE: **** Connect To Database Successfully ****
-May 24, 2020 10:12:56 PM sample.IncomingPurchases buttonHandleView
+May 26, 2020 11:31:51 AM sample.IncomingPurchases ButtonExit
+SEVERE: **** Disconnect From Database Successfully ****
+May 26, 2020 11:34:38 AM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 11:35:46 AM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 11:35:53 AM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 11:41:32 AM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 11:42:31 AM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 11:42:35 AM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 11:43:29 AM sample.CurrentInventory buttonHandleAdd
+INFO: Add Record to Products Table
+May 26, 2020 11:44:05 AM sample.CurrentInventory buttonHandleDelete
+INFO: Delete Record From Products Table
+May 26, 2020 11:44:09 AM sample.IncomingPurchases buttonHandleView
 INFO: View Purchases Table Records
-May 24, 2020 10:12:58 PM sample.IncomingPurchases buttonHandleDelete
+May 26, 2020 11:44:10 AM sample.IncomingPurchases buttonHandleView
+INFO: View Purchases Table Records
+May 26, 2020 11:44:11 AM sample.OutgoingOrders buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 11:44:21 AM sample.OutgoingOrders buttonHandleDelete
+INFO: Delete Record From Orders Table
+May 26, 2020 11:44:23 AM sample.OutgoingOrders buttonHandleDelete
+INFO: Delete Record From Orders Table
+May 26, 2020 11:44:25 AM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 11:44:26 AM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 11:44:28 AM sample.CurrentInventory buttonHandleDelete
+INFO: Delete Record From Products Table
+May 26, 2020 11:44:42 AM sample.CurrentInventory buttonHandleEdit
+INFO: Edit Record in Products Table
+May 26, 2020 11:44:52 AM sample.IncomingPurchases buttonHandleView
+INFO: View Purchases Table Records
+May 26, 2020 11:47:15 AM sample.IncomingPurchases buttonHandleAdd
+INFO: Add Record to Purchases Table
+May 26, 2020 11:49:11 AM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 11:49:39 AM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 11:50:19 AM sample.CurrentInventory ButtonExit
+SEVERE: **** Disconnect From Database Successfully ****
+May 26, 2020 11:51:55 AM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 11:54:36 AM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 11:54:57 AM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 11:55:48 AM sample.CurrentInventory buttonHandleAdd
+INFO: Add Record to Products Table
+May 26, 2020 11:57:23 AM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 11:57:40 AM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 11:58:08 AM sample.CurrentInventory buttonHandleAdd
+INFO: Add Record to Products Table
+May 26, 2020 11:58:19 AM sample.CurrentInventory buttonHandleDelete
+INFO: Delete Record From Products Table
+May 26, 2020 11:58:27 AM sample.CurrentInventory buttonHandleEdit
+INFO: Edit Record in Products Table
+May 26, 2020 11:58:58 AM sample.IncomingPurchases buttonHandleAdd
+INFO: Add Record to Purchases Table
+May 26, 2020 11:59:09 AM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 11:59:11 AM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 11:59:19 AM sample.IncomingPurchases buttonHandleView
+INFO: View Purchases Table Records
+May 26, 2020 11:59:44 AM sample.OutgoingOrders buttonHandleAdd
+INFO: Add Record to Orders Table
+May 26, 2020 11:59:51 AM sample.OutgoingOrders buttonHandleDelete
+INFO: Delete Record From Orders Table
+May 26, 2020 12:00:02 PM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 12:00:05 PM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 12:00:16 PM sample.CurrentInventory buttonHandleDelete
+INFO: Delete Record From Products Table
+May 26, 2020 12:00:20 PM sample.IncomingPurchases buttonHandleView
+INFO: View Purchases Table Records
+May 26, 2020 12:00:29 PM sample.IncomingPurchases buttonHandleDelete
 INFO: Delete Record From Purchases Table
-May 24, 2020 10:14:58 PM sample.Main start
+May 26, 2020 12:00:31 PM sample.IncomingPurchases buttonHandleDelete
+INFO: Delete Record From Purchases Table
+May 26, 2020 12:00:31 PM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 12:00:32 PM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 12:00:35 PM sample.CurrentInventory buttonHandleDelete
+INFO: Delete Record From Products Table
+May 26, 2020 12:00:39 PM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 12:00:41 PM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 12:08:00 PM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 12:08:17 PM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 12:11:16 PM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 12:11:26 PM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 12:12:00 PM sample.CurrentInventory buttonHandleAdd
+INFO: Add Record to Products Table
+May 26, 2020 12:12:11 PM sample.CurrentInventory buttonHandleEdit
+INFO: Edit Record in Products Table
+May 26, 2020 12:12:16 PM sample.CurrentInventory buttonHandleDelete
+INFO: Delete Record From Products Table
+May 26, 2020 12:12:20 PM sample.CurrentInventory buttonHandleDelete
+INFO: Delete Record From Products Table
+May 26, 2020 12:12:24 PM sample.IncomingPurchases buttonHandleView
+INFO: View Purchases Table Records
+May 26, 2020 12:12:48 PM sample.IncomingPurchases buttonHandleAdd
+INFO: Add Record to Purchases Table
+May 26, 2020 12:12:52 PM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 12:12:55 PM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 12:13:03 PM sample.CurrentInventory buttonHandleDelete
+INFO: Delete Record From Products Table
+May 26, 2020 12:13:06 PM sample.IncomingPurchases buttonHandleView
+INFO: View Purchases Table Records
+May 26, 2020 12:13:09 PM sample.IncomingPurchases buttonHandleDelete
+INFO: Delete Record From Purchases Table
+May 26, 2020 12:13:10 PM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 12:13:11 PM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 12:13:14 PM sample.CurrentInventory buttonHandleDelete
+INFO: Delete Record From Products Table
+May 26, 2020 12:13:38 PM sample.OutgoingOrders buttonHandleAdd
+INFO: Add Record to Orders Table
+May 26, 2020 12:13:46 PM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 12:13:47 PM sample.CurrentInventory buttonHandleView
+INFO: View Products Table Records
+May 26, 2020 12:14:25 PM sample.CurrentInventory initialize
+SEVERE: **** Connect To Database Successfully ****
+May 26, 2020 12:15:00 PM sample.CurrentInventory initialize
 SEVERE: **** Connect To Database Successfully ****

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="rootpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="1324.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Signin">
+   <children>
+      <ImageView fitHeight="548.0" fitWidth="966.0" layoutX="-2.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/Maersk.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="963.0" prefHeight="543.0" prefWidth="362.0" style="-fx-background-color: #212E40;">
+         <children>
+            <Label alignment="CENTER" layoutX="127.0" layoutY="117.0" prefHeight="27.0" prefWidth="108.0" text="Sign in" textFill="#db6f60">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label accessibleRole="BUTTON" alignment="CENTER" layoutX="71.0" layoutY="26.0" prefHeight="44.0" prefWidth="218.0" style="-fx-background-color: #DB6F60;" text="Inventory Managment System ">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <TextField fx:id="txfiuser" layoutX="106.0" layoutY="199.0" onAction="#buttonUser" promptText="Username">
+               <effect>
+                  <Glow />
+               </effect>
+            </TextField>
+            <Button layoutX="89.0" layoutY="335.0" mnemonicParsing="false" onAction="#buttonSign" prefHeight="32.0" prefWidth="188.0" style="-fx-background-color: #1E88E5;" text="Button" />
+            <PasswordField fx:id="txfipass" layoutX="106.0" layoutY="272.0" onAction="#buttonPass" promptText="Password" />
+            <Label fx:id="msg" layoutX="58.0" layoutY="396.0" prefHeight="17.0" prefWidth="236.0" textFill="#d70f0f" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

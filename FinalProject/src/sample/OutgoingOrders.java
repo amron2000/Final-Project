@@ -4,25 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 public class OutgoingOrders implements Initializable {
@@ -58,7 +52,7 @@ public class OutgoingOrders implements Initializable {
     private TextField txFiShipped;
 
     @FXML
-    private ChoiceBox<String> txFiCustomer;
+    private TextField txFiCustomer;
 
     @FXML
     private DatePicker txFiDate;
@@ -104,7 +98,7 @@ public class OutgoingOrders implements Initializable {
         tbColCustomer.setCellValueFactory(new PropertyValueFactory("customer"));
         try {
             productgetName();
-            customergetName();
+        //    customergetName();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -124,17 +118,17 @@ public class OutgoingOrders implements Initializable {
         txFiProduct.setItems(FXCollections.observableArrayList(list));
     }
 
-    private void customergetName() throws SQLException {
-        ResultSet rs2 = this.statement.executeQuery("Select customer From orders");
-        List<String> list = new ArrayList<>();
-        while(rs2.next()){
-            Orders order = new Orders();
-            order.setCustomer(rs2.getString("customer"));
-            String save = order.getCustomer();
-            list.add(save);
-        }
-        txFiCustomer.setItems(FXCollections.observableArrayList(list));
-    }
+//    private void customergetName() throws SQLException {
+//        ResultSet rs2 = this.statement.executeQuery("Select customer From orders");
+//        List<String> list = new ArrayList<>();
+//        while(rs2.next()){
+//            Orders order = new Orders();
+//            order.setCustomer(rs2.getString("customer"));
+//            String save = order.getCustomer();
+//            list.add(save);
+//        }
+//        txFiCustomer.setItems(FXCollections.observableArrayList(list));
+//    }
 
     public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
         return Instant.ofEpochMilli(dateToConvert.getTime())
@@ -148,7 +142,7 @@ public class OutgoingOrders implements Initializable {
             idUpdate = orders.getId();
             txFiShipped.setText(String.valueOf(orders.getNumberShipped()));
             txFiProduct.setValue(orders.getProductName());
-            txFiCustomer.setValue(orders.getCustomer());
+            txFiCustomer.setText(orders.getCustomer());
             Date newdate = orders.getDate();
             LocalDate localdate =  convertToLocalDateViaInstant(newdate);
             txFiDate.setValue(localdate);
@@ -159,7 +153,7 @@ public class OutgoingOrders implements Initializable {
 
     @FXML
     void buttonHandleAdd() throws Exception { ////// run and try ////// also Delete
-        String customer = String.valueOf(txFiCustomer.getValue());
+        String customer = String.valueOf(txFiCustomer.getText());
         String product = String.valueOf(txFiProduct.getValue());
         Integer shipped = Integer.parseInt(txFiShipped.getText());
         String date = String.valueOf(txFiDate.getValue());
@@ -193,39 +187,46 @@ public class OutgoingOrders implements Initializable {
 
     @FXML
     void buttonHandleDelete() throws Exception {
-        int id = tableView.getSelectionModel().getSelectedItem().getId();
-        String product = String.valueOf(txFiProduct.getValue());
-        Integer shipped = Integer.parseInt(txFiShipped.getText());
-        String sql = ("DELETE FROM orders WHERE id =" + id );
-        this.statement.executeUpdate(sql);
-        /////////////////////////////////
-        ResultSet rs = this.statement.executeQuery("Select InventoryShipped From products Where Product ='" +product + "'");
-        rs.next();
-        int allShipped = rs.getInt("InventoryShipped");
-        int newShipped = allShipped - shipped;
-        String sql1 = "Update products Set InventoryShipped=" + newShipped +
-                " Where product='" + product + "'";
-        this.statement.executeUpdate(sql1);
-        ///
-        ResultSet rs2 = this.statement.executeQuery("Select InventoryOnHand From products Where Product ='" +product + "'");
-        rs2.next();
-        int allHand = rs2.getInt("InventoryOnHand");
-        int newHand = allHand + shipped;
-        String sql2 = "Update products Set InventoryOnHand=" + newHand +
-                " Where product='" + product + "'";
-        this.statement.executeUpdate(sql2);
-        resetText();
-        show();
-        /////
-        log.logger.setLevel(Level.INFO);
-        log.logger.info("Delete Record From Orders Table");
-        /////
+        Alert c = new Alert(Alert.AlertType.CONFIRMATION);
+        c.setContentText(" Are you sure you want to delete this Record ?");
+        Optional<ButtonType> result =  c.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            int id = tableView.getSelectionModel().getSelectedItem().getId();
+            String product = String.valueOf(txFiProduct.getValue());
+            Integer shipped = Integer.parseInt(txFiShipped.getText());
+            String sql = ("DELETE FROM orders WHERE id =" + id);
+            this.statement.executeUpdate(sql);
+            /////////////////////////////////
+            ResultSet rs = this.statement.executeQuery("Select InventoryShipped From products Where Product ='" + product + "'");
+            rs.next();
+            int allShipped = rs.getInt("InventoryShipped");
+            int newShipped = allShipped - shipped;
+            String sql1 = "Update products Set InventoryShipped=" + newShipped +
+                    " Where product='" + product + "'";
+            this.statement.executeUpdate(sql1);
+            ///
+            ResultSet rs2 = this.statement.executeQuery("Select InventoryOnHand From products Where Product ='" + product + "'");
+            rs2.next();
+            int allHand = rs2.getInt("InventoryOnHand");
+            int newHand = allHand + shipped;
+            String sql2 = "Update products Set InventoryOnHand=" + newHand +
+                    " Where product='" + product + "'";
+            this.statement.executeUpdate(sql2);
+            resetText();
+            show();
+            /////
+            log.logger.setLevel(Level.INFO);
+            log.logger.info("Delete Record From Orders Table");
+            /////
+        }else{
+            System.out.println("will not delete");
+        }
     }
     private void resetText(){
         //  txFiDate.;
         txFiProduct.setValue("");
         txFiShipped.setText("");
-        txFiCustomer.setValue("");
+        txFiCustomer.setText("");
     }
 
 //    @FXML
@@ -281,6 +282,28 @@ public class OutgoingOrders implements Initializable {
     @FXML
     void buttonHandlePurchases() throws IOException {
         Pane pane = FXMLLoader.load(getClass().getResource("fxml/purchase.fxml"));
+        rootpane.getChildren().setAll(pane);
+    }
+    @FXML
+    void buttonLog() {
+        String path = "D:\\amro\\JetBrains\\JavaFx\\FinalProject\\log.txt";
+        File f = new File(path);
+        if(f.exists()) {
+            try {
+                Runtime rt = Runtime.getRuntime();
+                Process pro = rt.exec("Notepad "+path);
+                pro.waitFor();
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }else{
+            System.out.println("file not found ");
+        }
+    }
+
+    @FXML
+    void buttonSignOut() throws Exception {
+        Pane pane = FXMLLoader.load(getClass().getResource("fxml/Login.fxml"));
         rootpane.getChildren().setAll(pane);
     }
 
